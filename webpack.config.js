@@ -1,4 +1,5 @@
 const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   mode: "development",
@@ -7,7 +8,7 @@ module.exports = {
     filename: "bundle.js",
     path: path.resolve(__dirname, "dist"),
     clean: true,
-    publicPath: "/", // penting supaya server tahu root public
+    publicPath: "/",
   },
   devServer: {
     static: {
@@ -15,12 +16,7 @@ module.exports = {
     },
     port: 9000,
     historyApiFallback: true,
-    headers: {
-      // Boleh tambahkan header ini untuk melonggarkan CSP jika perlu
-      // "Content-Security-Policy": "default-src 'self' 'unsafe-inline' data: blob: *",
-    },
   },
-
   module: {
     rules: [
       {
@@ -28,9 +24,15 @@ module.exports = {
         use: ["style-loader", "css-loader"],
       },
       {
-        test: /\.(png|jpg|jpeg|gif|svg)$/,
+        test: /\.(png|jpg|jpeg|gif|svg)$/i,
         type: "asset/resource",
       },
     ],
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: "./src/index.html", // pastikan file ini ada
+      filename: "index.html",
+    }),
+  ],
 };

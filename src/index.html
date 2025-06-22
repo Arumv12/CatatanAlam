@@ -1,0 +1,41 @@
+<body>
+  <a href="#main-content" class="skip-link">Lewati ke konten utama</a>
+
+  <header>
+    <h1>Catatan Alam</h1>
+    <nav>
+      <a href="#/home">Beranda</a>
+      <a href="#/add">Tambah Cerita</a>
+      <a href="#/login">Login</a>
+      <a href="#/register">Register</a>
+      <button id="logoutBtn">Logout</button>
+      <button id="subscribeBtn">Aktifkan Notifikasi</button>
+    </nav>
+  </header>
+
+  <main id="main-content" tabindex="-1">
+    <div id="app"></div>
+  </main>
+
+  <script src="bundle.js"></script>
+  <script>
+    // Tambah listener setelah bundle.js di load
+    const subscribeBtn = document.getElementById("subscribeBtn");
+    subscribeBtn.addEventListener("click", async () => {
+      if (window.subscribePush) {
+        await window.subscribePush();
+      } else {
+        alert("Fungsi subscribe belum tersedia.");
+      }
+    });
+
+    const logoutBtn = document.getElementById("logoutBtn");
+    logoutBtn.addEventListener("click", () => {
+      if (window.logout) {
+        window.logout();
+      } else {
+        alert("Fungsi logout belum tersedia.");
+      }
+    });
+  </script>
+</body>
